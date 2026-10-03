@@ -20,6 +20,8 @@ export const Footer = () => {
   }, []);
 
   const name = siteSettings?.siteName || 'Banwao';
+  const tagline = siteSettings?.footerTagline || '“Ghar banana ho ya sajana, sahi logon se Banwao!”';
+  const servingText = siteSettings?.footerServingText || 'Serving homeowners & verified contractors in Noida & Greater Noida, India.';
   const phone = siteSettings?.contactPhone || '+91 98765 43210';
   const email = siteSettings?.supportEmail || 'support@banwao.in';
   const address = siteSettings?.officeAddress || 'Sector 62, Noida, Uttar Pradesh';
@@ -47,7 +49,7 @@ export const Footer = () => {
             </Link>
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
-              “Ghar banana ho ya sajana, sahi logon se Banwao!”
+              {tagline}
             </p>
             <p className="text-xs text-slate-400 leading-relaxed">
               {desc}
@@ -122,7 +124,7 @@ export const Footer = () => {
         <div className="border-t border-forest-900 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <p>{copyright}</p>
           <p className="flex items-center gap-1 text-slate-400">
-            <span>Serving homeowners & verified contractors in Noida & Greater Noida, India.</span>
+            <span>{servingText}</span>
           </p>
         </div>
       </div>

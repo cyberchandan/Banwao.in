@@ -103,14 +103,14 @@ export const Home = () => {
   const heroAccentColor = siteSettings?.heroHeadlineAccentColor || '#f59e0b';
   const heroFontSizeSetting = siteSettings?.heroHeadlineFontSize || 'large';
 
-  let heroFontSizeClass = 'text-3xl sm:text-4xl lg:text-5xl';
+  let heroFontSizeClass = 'text-2xl sm:text-3xl lg:text-[2.2rem] xl:text-4xl';
   let heroCustomStyle = { color: heroTitleColor };
 
-  if (heroFontSizeSetting === 'small') heroFontSizeClass = 'text-xl sm:text-2xl lg:text-3xl';
-  else if (heroFontSizeSetting === 'normal') heroFontSizeClass = 'text-2xl sm:text-3xl lg:text-4xl';
-  else if (heroFontSizeSetting === 'large') heroFontSizeClass = 'text-3xl sm:text-4xl lg:text-5xl';
-  else if (heroFontSizeSetting === 'xlarge') heroFontSizeClass = 'text-3xl sm:text-5xl lg:text-6xl';
-  else if (heroFontSizeSetting === 'huge') heroFontSizeClass = 'text-4xl sm:text-6xl lg:text-7xl';
+  if (heroFontSizeSetting === 'small') heroFontSizeClass = 'text-lg sm:text-xl lg:text-2xl';
+  else if (heroFontSizeSetting === 'normal') heroFontSizeClass = 'text-xl sm:text-2xl lg:text-3xl';
+  else if (heroFontSizeSetting === 'large') heroFontSizeClass = 'text-2xl sm:text-3xl lg:text-[2.2rem] xl:text-4xl';
+  else if (heroFontSizeSetting === 'xlarge') heroFontSizeClass = 'text-2xl sm:text-3xl lg:text-4xl xl:text-[2.75rem]';
+  else if (heroFontSizeSetting === 'huge') heroFontSizeClass = 'text-3xl sm:text-4xl lg:text-5xl';
   else if (heroFontSizeSetting) heroCustomStyle.fontSize = heroFontSizeSetting;
 
   const headlineParts = heroTitle.includes(',') 
@@ -149,15 +149,12 @@ export const Home = () => {
                 <span>{heroBadge}</span>
               </div>
 
-              <h1 className={`${heroFontSizeClass} font-black font-heading tracking-tight leading-[1.1]`} style={heroCustomStyle}>
-                {headlineParts[0]}
+              <h1 className={`${heroFontSizeClass} font-black font-heading tracking-tight leading-[1.15]`} style={heroCustomStyle}>
+                <span className="block font-black leading-tight">{headlineParts[0]}</span>
                 {headlineParts[1] && (
-                  <>
-                    <br />
-                    <span className="italic" style={{ color: heroAccentColor }}>
-                      {headlineParts[1]}
-                    </span>
-                  </>
+                  <span className="block italic mt-0.5 leading-tight" style={{ color: heroAccentColor }}>
+                    {headlineParts[1]}
+                  </span>
                 )}
               </h1>
 

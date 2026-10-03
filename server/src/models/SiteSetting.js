@@ -108,6 +108,14 @@ const siteSettingSchema = new mongoose.Schema({
   },
 
   // Footer & Social Links
+  footerTagline: {
+    type: String,
+    default: '“Ghar banana ho ya sajana, sahi logon se Banwao!”'
+  },
+  footerServingText: {
+    type: String,
+    default: 'Serving homeowners & verified contractors in Noida & Greater Noida, India.'
+  },
   footerDescription: {
     type: String,
     default: "Noida & Greater Noida's leading marketplace connecting homeowners with verified local construction contractors."

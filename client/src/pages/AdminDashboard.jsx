@@ -1252,6 +1252,28 @@ export const AdminDashboard = () => {
 
                 <div className="space-y-3 text-xs">
                   <div>
+                    <label className="block font-semibold text-slate-700 mb-1">Footer Brand Tagline Quote</label>
+                    <input
+                      type="text"
+                      value={siteSettings.footerTagline || ''}
+                      onChange={(e) => setSiteSettings({ ...siteSettings, footerTagline: e.target.value })}
+                      className="w-full p-2.5 bg-white border border-slate-200 rounded-xl outline-none font-medium text-slate-900"
+                      placeholder="“Ghar banana ho ya sajana, sahi logon se Banwao!”"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-semibold text-slate-700 mb-1">Footer Bottom Serving Note</label>
+                    <input
+                      type="text"
+                      value={siteSettings.footerServingText || ''}
+                      onChange={(e) => setSiteSettings({ ...siteSettings, footerServingText: e.target.value })}
+                      className="w-full p-2.5 bg-white border border-slate-200 rounded-xl outline-none font-medium text-slate-900"
+                      placeholder="Serving homeowners & verified contractors in Noida & Greater Noida, India."
+                    />
+                  </div>
+
+                  <div>
                     <label className="block font-semibold text-slate-700 mb-1">Footer Brand Description</label>
                     <textarea
                       rows={2}

@@ -27,18 +27,85 @@ export const Locations = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
       
       {/* Header Banner */}
-      <div className="bg-forest-900 text-white p-8 sm:p-12 rounded-3xl shadow-elevated relative overflow-hidden">
-        <div className="max-w-2xl space-y-3 relative z-10">
-          <div className="flex items-center gap-2">
-            <Link to="/locations/noida" className={`px-3 py-1 rounded-full text-xs font-bold ${selectedCity === 'Noida' ? 'bg-gold-500 text-forest-950' : 'bg-forest-800 text-slate-300'}`}>Noida</Link>
-            <Link to="/locations/greater-noida" className={`px-3 py-1 rounded-full text-xs font-bold ${selectedCity === 'Greater Noida' ? 'bg-gold-500 text-forest-950' : 'bg-forest-800 text-slate-300'}`}>Greater Noida</Link>
+      <div className="bg-forest-900 text-white p-6 sm:p-8 lg:p-10 rounded-3xl shadow-elevated relative overflow-hidden">
+        {/* Background glow effects */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-forest-800/60 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-gold-500/10 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none"></div>
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+          
+          {/* Left Text & Navigation */}
+          <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 p-1 bg-forest-950/60 rounded-full border border-forest-800">
+              <Link 
+                to="/locations/noida" 
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${selectedCity === 'Noida' ? 'bg-gold-500 text-forest-950 shadow-md' : 'text-slate-300 hover:text-white'}`}
+              >
+                Noida Sectors
+              </Link>
+              <Link 
+                to="/locations/greater-noida" 
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${selectedCity === 'Greater Noida' ? 'bg-gold-500 text-forest-950 shadow-md' : 'text-slate-300 hover:text-white'}`}
+              >
+                Greater Noida
+              </Link>
+            </div>
+
+            <h1 className="text-2xl sm:text-4xl font-black font-heading tracking-tight">
+              Construction & Services in <span className="text-gold-400 italic">{selectedCity}</span>
+            </h1>
+
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+              Banwao connects plot owners and residents in {selectedCity} with verified local contractors for new house construction, builder floors, interior design, and full home remodeling.
+            </p>
+
+            <div className="pt-1 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+              <Link
+                to={`/get-quotes?city=${selectedCity}`}
+                className="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-600 text-forest-950 font-bold text-xs sm:text-sm shadow-md transition-transform hover:scale-105 flex items-center gap-2"
+              >
+                <Sparkles className="w-4 h-4 text-forest-950" />
+                <span>Get Free Quotes in {selectedCity}</span>
+              </Link>
+            </div>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black font-heading">
-            Construction & Services in {selectedCity}
-          </h1>
-          <p className="text-slate-300 text-sm sm:text-base">
-            Banwao connects plot owners and residents in {selectedCity} with verified local contractors for new house construction, independent floors, and remodeling.
-          </p>
+
+          {/* Right Side Visual Feature Card */}
+          <div className="lg:col-span-5 relative">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-gold-500 text-forest-950 flex items-center justify-center font-bold shadow-md shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-white uppercase tracking-wider">{selectedCity} Coverage</h4>
+                    <p className="text-[10px] text-slate-300">Verified Local Network</p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full bg-forest-800 border border-gold-500/30 text-gold-400 text-[10px] font-bold tracking-wide">
+                  Active Region
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-forest-950/50 p-3 rounded-xl border border-white/10 text-center lg:text-left">
+                  <p className="text-lg font-bold font-heading text-gold-400">50+</p>
+                  <p className="text-[11px] text-slate-300 font-medium">Verified Contractors</p>
+                </div>
+                <div className="bg-forest-950/50 p-3 rounded-xl border border-white/10 text-center lg:text-left">
+                  <p className="text-lg font-bold font-heading text-gold-400">24-48h</p>
+                  <p className="text-[11px] text-slate-300 font-medium">Avg. Quote Time</p>
+                </div>
+              </div>
+
+              <div className="pt-1 flex items-center gap-2 text-xs text-slate-300 bg-forest-950/30 p-2.5 rounded-xl border border-white/5">
+                <ShieldCheck className="w-4 h-4 text-gold-400 shrink-0" />
+                <span>Sector-matched contractors with portfolio validation</span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
