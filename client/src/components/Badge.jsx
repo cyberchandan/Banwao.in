@@ -23,8 +23,8 @@ export const StatusBadge = ({ status }) => {
   const config = map[status] || { label: status, bg: 'bg-slate-100 text-slate-800 border-slate-200' };
 
   return (
-    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs border ${config.bg}`}>
-      <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5"></span>
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs border whitespace-nowrap shrink-0 ${config.bg}`}>
+      <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 shrink-0"></span>
       {config.label}
     </span>
   );

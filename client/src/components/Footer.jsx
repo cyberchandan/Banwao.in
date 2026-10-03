@@ -5,18 +5,35 @@ import { apiFetch } from '../services/api';
 
 export const Footer = () => {
   const [siteSettings, setSiteSettings] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [serviceAreas, setServiceAreas] = useState([]);
 
   useEffect(() => {
-    const fetchSettings = () => {
+    const fetchFooterData = () => {
       apiFetch('/services/settings/public')
         .then((res) => { if (res.success) setSiteSettings(res.settings); })
         .catch(() => {});
+
+      apiFetch('/services')
+        .then((res) => { if (res.success) setCategories(res.categories || []); })
+        .catch(() => {});
+
+      apiFetch('/services/areas/all')
+        .then((res) => { if (res.success) setServiceAreas(res.areas || []); })
+        .catch(() => {});
     };
 
-    fetchSettings();
+    fetchFooterData();
 
-    window.addEventListener('site-settings-updated', fetchSettings);
-    return () => window.removeEventListener('site-settings-updated', fetchSettings);
+    window.addEventListener('site-settings-updated', fetchFooterData);
+    window.addEventListener('categories-updated', fetchFooterData);
+    window.addEventListener('service-areas-updated', fetchFooterData);
+
+    return () => {
+      window.removeEventListener('site-settings-updated', fetchFooterData);
+      window.removeEventListener('categories-updated', fetchFooterData);
+      window.removeEventListener('service-areas-updated', fetchFooterData);
+    };
   }, []);
 
   const name = siteSettings?.siteName || 'Banwao';
@@ -27,6 +44,10 @@ export const Footer = () => {
   const address = siteSettings?.officeAddress || 'Sector 62, Noida, Uttar Pradesh';
   const desc = siteSettings?.footerDescription || "Noida & Greater Noida's leading marketplace connecting homeowners with verified local construction contractors.";
   const copyright = siteSettings?.footerCopyright || `© ${new Date().getFullYear()} ${name}. All rights reserved.`;
+
+  const col1Title = siteSettings?.footerCol1Title || 'POPULAR SERVICES';
+  const col2Title = siteSettings?.footerCol2Title || 'SERVICE AREAS';
+  const col3Title = siteSettings?.footerCol3Title || 'COMPANY & LEGAL';
 
   return (
     <footer className="bg-forest-950 text-slate-300 border-t border-forest-800">
@@ -76,36 +97,61 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Services Column */}
+          {/* Dynamic Services Column */}
           <div>
-            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">Popular Services</h3>
+            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">{col1Title}</h3>
             <ul className="space-y-2.5 text-xs text-slate-400">
-              <li><Link to="/services/new-construction" className="hover:text-gold-400 transition-colors">New House Construction</Link></li>
-              <li><Link to="/services/turnkey-construction" className="hover:text-gold-400 transition-colors">Turnkey Material + Labour</Link></li>
-              <li><Link to="/services/independent-floor-construction" className="hover:text-gold-400 transition-colors">Independent Floor Floors</Link></li>
-              <li><Link to="/services/home-renovation" className="hover:text-gold-400 transition-colors">Home Renovation</Link></li>
-              <li><Link to="/services/painting-services" className="hover:text-gold-400 transition-colors">Painting & Texture</Link></li>
-              <li><Link to="/services/waterproofing" className="hover:text-gold-400 transition-colors">Roof Waterproofing</Link></li>
-              <li><Link to="/services" className="text-gold-400 font-medium hover:underline">View All Services →</Link></li>
+              {categories.length > 0 ? (
+                categories.slice(0, 6).map((cat) => (
+                  <li key={cat._id}>
+                    <Link to={`/services/${cat.slug}`} className="hover:text-gold-400 transition-colors">
+                      {cat.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li><Link to="/services/new-house-construction" className="hover:text-gold-400 transition-colors">New House Construction</Link></li>
+                  <li><Link to="/services/turnkey-construction" className="hover:text-gold-400 transition-colors">Turnkey Material + Labour</Link></li>
+                  <li><Link to="/services/independent-floor-construction" className="hover:text-gold-400 transition-colors">Independent Floor Construction</Link></li>
+                  <li><Link to="/services/home-renovation" className="hover:text-gold-400 transition-colors">Home Renovation</Link></li>
+                  <li><Link to="/services/painting-services" className="hover:text-gold-400 transition-colors">Painting & Texture</Link></li>
+                  <li><Link to="/services/roof-waterproofing" className="hover:text-gold-400 transition-colors">Roof Waterproofing</Link></li>
+                </>
+              )}
+              <li className="pt-1"><Link to="/services" className="text-gold-400 font-medium hover:underline">View All Services →</Link></li>
             </ul>
           </div>
 
-          {/* Locations Column */}
+          {/* Dynamic Service Areas Column */}
           <div>
-            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">Service Areas</h3>
+            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">{col2Title}</h3>
             <ul className="space-y-2.5 text-xs text-slate-400">
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Noida Sector 62 & Central</Link></li>
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Noida Sector 50 & 75</Link></li>
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Noida Expressway (Sec 128, 137, 150)</Link></li>
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Greater Noida West (Extension)</Link></li>
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Pari Chowk & Knowledge Park</Link></li>
-              <li><Link to="/locations" className="hover:text-gold-400 transition-colors">Omega, Alpha & Zeta Sectors</Link></li>
+              {serviceAreas.length > 0 ? (
+                serviceAreas.slice(0, 6).map((area) => (
+                  <li key={area._id}>
+                    <Link to={`/locations/${area.city.toLowerCase().replace(/\s+/g, '-')}`} className="hover:text-gold-400 transition-colors">
+                      {area.sector} ({area.city})
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li><Link to="/locations/noida" className="hover:text-gold-400 transition-colors">Noida Sector 62 & Central</Link></li>
+                  <li><Link to="/locations/noida" className="hover:text-gold-400 transition-colors">Noida Sector 50 & 75</Link></li>
+                  <li><Link to="/locations/noida" className="hover:text-gold-400 transition-colors">Noida Expressway Sectors</Link></li>
+                  <li><Link to="/locations/greater-noida" className="hover:text-gold-400 transition-colors">Greater Noida West (Extension)</Link></li>
+                  <li><Link to="/locations/greater-noida" className="hover:text-gold-400 transition-colors">Pari Chowk & Knowledge Park</Link></li>
+                  <li><Link to="/locations/greater-noida" className="hover:text-gold-400 transition-colors">Alpha, Beta & Gamma Sectors</Link></li>
+                </>
+              )}
+              <li className="pt-1"><Link to="/locations" className="text-gold-400 font-medium hover:underline">View All Locations →</Link></li>
             </ul>
           </div>
 
-          {/* Quick Links Column */}
+          {/* Company & Legal Column */}
           <div>
-            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">Company & Legal</h3>
+            <h3 className="text-white text-sm font-semibold tracking-wider uppercase mb-4">{col3Title}</h3>
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li><Link to="/how-it-works" className="hover:text-gold-400 transition-colors">How It Works</Link></li>
               <li><Link to="/about" className="hover:text-gold-400 transition-colors">About {name}</Link></li>

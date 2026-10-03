@@ -178,6 +178,22 @@ exports.deleteCategory = async (req, res, next) => {
   }
 };
 
+// @desc    Get active service areas for public site
+// @route   GET /api/v1/services/areas/all
+// @access  Public
+exports.getServiceAreas = async (req, res, next) => {
+  try {
+    const areas = await ServiceArea.find({ isActive: true }).sort({ city: 1, sector: 1 });
+    res.status(200).json({
+      success: true,
+      count: areas.length,
+      areas
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc    Get all service areas for Admin (active + inactive)
 // @route   GET /api/v1/admin/areas
 // @access  Private (Admin)

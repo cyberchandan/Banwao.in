@@ -108,6 +108,18 @@ const siteSettingSchema = new mongoose.Schema({
   },
 
   // Footer & Social Links
+  footerCol1Title: {
+    type: String,
+    default: 'POPULAR SERVICES'
+  },
+  footerCol2Title: {
+    type: String,
+    default: 'SERVICE AREAS'
+  },
+  footerCol3Title: {
+    type: String,
+    default: 'COMPANY & LEGAL'
+  },
   footerTagline: {
     type: String,
     default: '“Ghar banana ho ya sajana, sahi logon se Banwao!”'
